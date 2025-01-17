@@ -1,0 +1,71 @@
+#pragma once
+
+#include <Primitives>
+#include <cmath>
+#include <vector>
+
+namespace rudra {
+
+class ThreeXYEncoder {
+private:
+    // Encoder configuration
+    float wheelSeperation,
+        wheelDiameter;
+    int encoderPPR;
+    float mmsPerPulse;
+
+    // Calculation
+    double rawX, rawYR, rawYL;
+    double deltaYaw, dXLocal, dYLocal;
+    double dXGlobal, dYGlobal;
+
+    double xCorrection, xCorrected;
+
+public:
+    Arena odomArena;
+    Pose odomPose;
+
+    // Constructor with required parameters for odometry.
+    explicit ThreeXYEncoder(
+        // Distance between opposite Y wheels
+        float _wheelSep,
+
+        // Diameter of Encoder wheel
+        float _wheelDiam,
+
+        // Pulse per rotation of odometry encoder
+        int _encPPR,
+
+        // Starting position for the robot in arena
+        const Pose& _initPose,
+
+        // Arena dimensions
+        const Arena& _arena)
+        : wheelSeperation(_wheelSep)
+        , wheelDiameter(_wheelDiam)
+        , encoderPPR(_encPPR)
+        , odomArena(_arena)
+        , odomPose(_initPose)
+    {
+        mmsPerPulse = (2 * M_PI * wheelDiameter) / encoderPPR;
+    }
+
+    ///////////////////////////// ALGORITHMS /////////////////////////////
+
+    // 1. Updates the robot position based on counts from encoders.
+    Pose update(
+        // X encoder count>
+        long countX,
+
+        // Y right encoder count
+        long count_Y_R,
+
+        // Y left encoder count
+        long count_Y_L);
+
+    //////////////////////////////// GETTERS ///////////////////////////////
+
+    ~ThreeXYEncoder();
+};
+
+} // namespace rudra

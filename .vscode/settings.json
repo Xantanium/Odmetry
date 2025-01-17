@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.sqlbook": "sql",
+        "*.ndjson": "jsonl",
+        "*.dbclient-js": "javascript",
+        "*.ino": "cpp",
+        "primitives": "cpp",
+        "threexyencoder": "cpp",
+        "odometry": "cpp"
+    }
+}

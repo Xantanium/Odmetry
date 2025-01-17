@@ -1,0 +1,22 @@
+#pragma once
+
+#include "Primitives"
+#include "Strategy/ThreeXYEncoder/ThreeXYEncoder"
+
+namespace rudra {
+
+template <typename Strategy>
+
+class Odometry {
+private:
+    Strategy strategy;
+
+public:
+    explicit Odometry(const T& _strategy)
+        : strategy(_strategy) { };
+
+    Pose update(long countX, long countYR, long countYL);
+};
+
+//
+} // namespace rudra
